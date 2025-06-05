@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Omni DateTime Picker',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.cyan,
+          seedColor: Colors.red,
           brightness: Brightness.light,
         ),
       ),
