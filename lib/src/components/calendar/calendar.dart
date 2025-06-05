@@ -60,11 +60,11 @@ class Calendar extends StatelessWidget {
             margin: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondaryContainer,
-              shape: BoxShape.circle,
+              shape: BoxShape.rectangle,
             ),
             alignment: Alignment.center,
             child: Text(
-              '${day.day}',
+              '${day.day}a',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSecondaryContainer,
                 fontWeight: FontWeight.bold,
