@@ -47,8 +47,17 @@ class RangePickerDialog extends StatefulWidget {
 
   final ButtonRowBuilder? actionsBuilder;
 
+  final List<DateTime> startHighlightedDates;
+  final List<DateTime> endHighlightedDates;
+  final ValueChanged<DateTime>? onStartHighlightedDateTap;
+  final ValueChanged<DateTime>? onEndHighlightedDateTap;
+
   const RangePickerDialog({
     super.key,
+    this.startHighlightedDates = const [],
+    this.endHighlightedDates   = const [],
+    this.onStartHighlightedDateTap,
+    this.onEndHighlightedDateTap,
     this.title,
     this.titleSeparator,
     this.startLabelWidget,

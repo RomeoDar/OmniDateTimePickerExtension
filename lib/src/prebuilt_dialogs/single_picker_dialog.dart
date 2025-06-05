@@ -32,9 +32,12 @@ class SinglePickerDialog extends StatelessWidget {
   final OmniDateTimePickerType? type;
 
   final ButtonRowBuilder? actionsBuilder;
-
+  final List<DateTime> highlightedDates;
+  final ValueChanged<DateTime>? onHighlightedDateTap;
   const SinglePickerDialog({
     super.key,
+    this.highlightedDates = const [],
+    this.onHighlightedDateTap,
     this.title,
     this.titleSeparator,
     this.separator,

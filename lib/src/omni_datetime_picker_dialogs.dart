@@ -12,6 +12,8 @@ import 'prebuilt_dialogs/single_picker_dialog.dart';
 ///
 Future<DateTime?> showOmniDateTimePicker({
   required BuildContext context,
+  List<DateTime> highlightedDates = const [],
+  ValueChanged<DateTime>? onHighlightedDateTap,
   Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
       transitionBuilder,
   Duration? transitionDuration,
@@ -69,6 +71,8 @@ Future<DateTime?> showOmniDateTimePicker({
           is24HourMode: is24HourMode,
           isShowSeconds: isShowSeconds,
           minutesInterval: minutesInterval,
+          highlightedDates: highlightedDates,           // ← pass through
+          onHighlightedDateTap: onHighlightedDateTap,   // ← pass through
           secondsInterval: secondsInterval,
           isForce2Digits: isForce2Digits,
           borderRadius: borderRadius,
@@ -91,6 +95,10 @@ Future<DateTime?> showOmniDateTimePicker({
 ///
 Future<List<DateTime>?> showOmniDateTimeRangePicker({
   required BuildContext context,
+  List<DateTime> startHighlightedDates = const [],
+  List<DateTime> endHighlightedDates   = const [],
+  ValueChanged<DateTime>? onStartHighlightedDateTap,
+  ValueChanged<DateTime>? onEndHighlightedDateTap,
   DateTime? startInitialDate,
   DateTime? startFirstDate,
   DateTime? startLastDate,
@@ -174,6 +182,10 @@ Future<List<DateTime>?> showOmniDateTimeRangePicker({
           startSelectableDayPredicate: startSelectableDayPredicate,
           endSelectableDayPredicate: endSelectableDayPredicate,
           actionsBuilder: actionsBuilder,
+          startHighlightedDates: startHighlightedDates,
+          endHighlightedDates:   endHighlightedDates,
+          onStartHighlightedDateTap: onStartHighlightedDateTap,
+          onEndHighlightedDateTap:   onEndHighlightedDateTap,
         ),
       );
     },

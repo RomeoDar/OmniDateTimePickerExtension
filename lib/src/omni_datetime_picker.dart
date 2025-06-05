@@ -28,9 +28,13 @@ class OmniDateTimePicker extends StatefulWidget {
 
   final Widget? separator;
   final OmniDateTimePickerType type;
+  final List<DateTime> highlightedDates;
+  final ValueChanged<DateTime>? onHighlightedDateTap;
 
   const OmniDateTimePicker({
     super.key,
+    this.highlightedDates = const [],
+    this.onHighlightedDateTap,
     this.initialDate,
     this.firstDate,
     this.lastDate,
@@ -84,9 +88,10 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                     firstDate: state.firstDate,
                     lastDate: state.lastDate,
                     selectableDayPredicate: widget.selectableDayPredicate,
+                    highlightedDates: widget.highlightedDates,          // ← NEW
+                    onHighlightedDateTap: widget.onHighlightedDateTap,  // ← NEW
                     onDateChanged: (datetime) {
-                      context
-                          .read<OmniDatetimePickerBloc>()
+                      context.read<OmniDatetimePickerBloc>()
                           .add(UpdateDate(dateTime: datetime));
                     },
                   ),

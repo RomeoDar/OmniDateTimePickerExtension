@@ -1,12 +1,18 @@
+// lib/components/calendar/calendar.dart
 import 'package:flutter/material.dart';
-import 'flutter_calendar.dart' as cdp;
+import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatelessWidget {
-  final DateTime initialDate;
-  final DateTime firstDate;
-  final DateTime lastDate;
-  final void Function(DateTime) onDateChanged;
+  /// REQUIRED
+  final DateTime initialDate, firstDate, lastDate;
+  final ValueChanged<DateTime> onDateChanged;
+
+  /// OPTIONAL
   final bool Function(DateTime)? selectableDayPredicate;
+
+  /// NEW
+  final List<DateTime> highlightedDates;
+  final ValueChanged<DateTime>? onHighlightedDateTap;
 
   const Calendar({
     super.key,
@@ -15,16 +21,58 @@ class Calendar extends StatelessWidget {
     required this.lastDate,
     required this.onDateChanged,
     this.selectableDayPredicate,
+    this.highlightedDates = const [],
+    this.onHighlightedDateTap,
   });
+
+  bool _isSameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
 
   @override
   Widget build(BuildContext context) {
-    return cdp.CalendarDatePicker(
-      initialDate: initialDate,
-      firstDate: firstDate,
-      lastDate: lastDate,
-      onDateChanged: onDateChanged,
-      selectableDayPredicate: selectableDayPredicate,
+    return TableCalendar(
+      firstDay: firstDate,
+      lastDay: lastDate,
+      focusedDay: initialDate,
+      availableCalendarFormats: const {CalendarFormat.month: 'Month'},
+      // Disable days via the original predicate
+      enabledDayPredicate: selectableDayPredicate,
+      selectedDayPredicate: (d) => _isSameDay(d, initialDate),
+
+      onDaySelected: (selected, focused) {
+        // Normal callback always fires
+        onDateChanged(selected);
+
+        // Extra callback only for highlighted days
+        if (highlightedDates.any((d) => _isSameDay(d, selected))) {
+          onHighlightedDateTap?.call(selected);
+        }
+      },
+
+      /// ==========  CUSTOM CELL DECORATION ==========
+      calendarBuilders: CalendarBuilders(
+        defaultBuilder: (context, day, focusedDay) {
+          final bool isHighlighted =
+          highlightedDates.any((d) => _isSameDay(d, day));
+          if (!isHighlighted) return null; // fall back to default
+
+          return Container(
+            margin: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              '${day.day}',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondaryContainer,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
