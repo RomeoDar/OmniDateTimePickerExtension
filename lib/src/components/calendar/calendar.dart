@@ -60,7 +60,7 @@ class Calendar extends StatelessWidget {
             margin: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondaryContainer,
-              shape: BoxShape.rectangle,
+              shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
             child: Text(
