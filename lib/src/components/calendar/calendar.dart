@@ -64,7 +64,7 @@ class Calendar extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: Text(
-              '${day.day}',
+              '${day.day}aa',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSecondaryContainer,
                 fontWeight: FontWeight.bold,
