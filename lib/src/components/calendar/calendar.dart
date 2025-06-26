@@ -34,11 +34,25 @@ class Calendar extends StatelessWidget {
       firstDay: firstDate,
       lastDay: lastDate,
       focusedDay: initialDate,
+      rowHeight: 40,
       availableCalendarFormats: const {CalendarFormat.month: 'Month'},
       // Disable days via the original predicate
       enabledDayPredicate: selectableDayPredicate,
       selectedDayPredicate: (d) => _isSameDay(d, initialDate),
-
+      headerStyle: HeaderStyle(
+        titleCentered: true,
+        formatButtonVisible: false,
+        leftChevronIcon: Icon(Icons.arrow_back_ios, size: 14),
+        rightChevronIcon: Icon(Icons.arrow_forward_ios, size: 14),
+        titleTextStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+      ),
       onDaySelected: (selected, focused) {
         // Normal callback always fires
         onDateChanged(selected);
@@ -55,18 +69,66 @@ class Calendar extends StatelessWidget {
           final bool isHighlighted =
           highlightedDates.any((d) => _isSameDay(d, day));
           if (!isHighlighted) return null; // fall back to default
+          return Container(
+            margin: const EdgeInsets.all(3),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.black, // Black border color
+                width: 1.5,          // Border thickness (adjust as needed)
+              ),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              '${day.day}',
+              style: const TextStyle(
+                color: Colors.black,    // Black text color
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
+        selectedBuilder: (context, day, focusedDay) {
+          return Container(
+            margin: const EdgeInsets.all(3),
+            decoration: BoxDecoration(
+              color: Colors.black, // change as you want
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.black,
+                width: 1.5,
+              ),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              '${day.day}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
+        todayBuilder: (context, day, focusedDay) {
+          final bool isSelected = _isSameDay(day, initialDate);
+          final bool isHighlighted = highlightedDates.any((d) => _isSameDay(d, day));
 
           return Container(
-            margin: const EdgeInsets.all(6),
+            margin: const EdgeInsets.all(3),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondaryContainer,
+              color: isSelected ? Colors.black : Colors.transparent,
               shape: BoxShape.circle,
+              border: Border.all(
+                color: isHighlighted || isSelected ? Colors.transparent : Colors.transparent,
+                width: 1.5,
+              ),
             ),
             alignment: Alignment.center,
             child: Text(
               '${day.day}',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onSecondaryContainer,
+                color: isSelected ? Colors.white : Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),

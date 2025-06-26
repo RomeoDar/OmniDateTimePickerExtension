@@ -26,7 +26,7 @@ class TimePickerSpinner extends StatelessWidget {
     this.height = 200,
     this.diameterRatio = 2,
     this.itemExtent = 40,
-    this.squeeze = 1,
+    this.squeeze = 1.1,
     this.magnification = 1.1,
     this.looping = false,
     this.selectionOverlay = const CupertinoPickerDefaultSelectionOverlay(),
@@ -117,7 +117,12 @@ class TimePickerSpinner extends StatelessWidget {
                             hour = hour.padLeft(2, '0');
                           }
 
-                          return Center(child: Text(hour));
+                          return Center(
+                            child: Text(
+                              hour,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -147,7 +152,7 @@ class TimePickerSpinner extends StatelessWidget {
                           if (isForce2Digits) {
                             minute = minute.padLeft(2, '0');
                           }
-                          return Center(child: Text(minute));
+                          return Center(child: Text(minute,style: TextStyle(fontSize: 14),));
                         },
                       ),
                     ),
@@ -179,7 +184,7 @@ class TimePickerSpinner extends StatelessWidget {
                               second = second.padLeft(2, '0');
                             }
 
-                            return Center(child: Text(second));
+                            return Center(child: Text(second,style: TextStyle(fontSize: 14),));
                           },
                         ),
                       ),
@@ -207,7 +212,7 @@ class TimePickerSpinner extends StatelessWidget {
                         childCount: state.abbreviations.length,
                         itemBuilder: (context, index) {
                           return Center(
-                              child: Text(state.abbreviations[index]));
+                              child: Text(state.abbreviations[index],style: TextStyle(fontSize: 14),));
                         },
                       ),
                     ),

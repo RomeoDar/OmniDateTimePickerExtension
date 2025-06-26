@@ -58,6 +58,20 @@ class OmniDateTimePicker extends StatefulWidget {
 }
 
 class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
+  bool _showTimePicker = false;
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (mounted) {
+        setState(() {
+          _showTimePicker = true;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
@@ -96,8 +110,9 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                     },
                   ),
                 if (widget.separator != null) widget.separator!,
-                if (widget.type == OmniDateTimePickerType.dateAndTime ||
-                    widget.type == OmniDateTimePickerType.time)
+                if ((widget.type == OmniDateTimePickerType.dateAndTime ||
+                    widget.type == OmniDateTimePickerType.time) &&
+                        _showTimePicker)
                   TimePickerSpinner(
                     amText:
                         widget.amText ?? localizations.anteMeridiemAbbreviation,
