@@ -42,8 +42,11 @@ class Calendar extends StatelessWidget {
       headerStyle: HeaderStyle(
         titleCentered: true,
         formatButtonVisible: false,
-        leftChevronIcon: Icon(Icons.arrow_back_ios, size: 14),
-        rightChevronIcon: Icon(Icons.arrow_forward_ios, size: 14),
+        leftChevronMargin: EdgeInsets.symmetric(horizontal: 0,vertical: 5),
+        rightChevronMargin: EdgeInsets.symmetric(horizontal: 0,vertical: 5),
+        leftChevronPadding: EdgeInsets.symmetric(horizontal: 0),
+        rightChevronPadding: EdgeInsets.symmetric(horizontal: 0),
+
         titleTextStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
