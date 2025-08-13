@@ -30,7 +30,7 @@ class OmniDateTimePicker extends StatefulWidget {
   final OmniDateTimePickerType type;
   final List<DateTime> highlightedDates;
   final ValueChanged<DateTime>? onHighlightedDateTap;
-
+  final bool autoSelectInitialDate;
   const OmniDateTimePicker({
     super.key,
     this.highlightedDates = const [],
@@ -51,6 +51,7 @@ class OmniDateTimePicker extends StatefulWidget {
     this.selectionOverlay = const CupertinoPickerDefaultSelectionOverlay(),
     this.separator,
     this.type = OmniDateTimePickerType.dateAndTime,
+    this.autoSelectInitialDate = true,
   });
 
   @override
@@ -87,7 +88,11 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
       ),
       child: BlocConsumer<OmniDatetimePickerBloc, OmniDatetimePickerState>(
         listener: (context, state) {
-          widget.onDateTimeChanged(state.dateTime);
+          // Only call onDateTimeChanged if autoSelectInitialDate is true
+          // or if this is not the initial state
+          if (widget.autoSelectInitialDate) {
+            widget.onDateTimeChanged(state.dateTime);
+          }
         },
         builder: (context, state) {
           return ScrollConfiguration(
@@ -102,22 +107,24 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                     firstDate: state.firstDate,
                     lastDate: state.lastDate,
                     selectableDayPredicate: widget.selectableDayPredicate,
-                    highlightedDates: widget.highlightedDates,          // ← NEW
-                    onHighlightedDateTap: widget.onHighlightedDateTap,  // ← NEW
+                    highlightedDates: widget.highlightedDates,
+                    onHighlightedDateTap: widget.onHighlightedDateTap,
+                    autoSelectInitialDate: widget.autoSelectInitialDate,
                     onDateChanged: (datetime) {
                       context.read<OmniDatetimePickerBloc>()
                           .add(UpdateDate(dateTime: datetime));
+                      widget.onDateTimeChanged(datetime);
                     },
                   ),
                 if (widget.separator != null) widget.separator!,
                 if ((widget.type == OmniDateTimePickerType.dateAndTime ||
                     widget.type == OmniDateTimePickerType.time) &&
-                        _showTimePicker)
+                    _showTimePicker)
                   TimePickerSpinner(
                     amText:
-                        widget.amText ?? localizations.anteMeridiemAbbreviation,
+                    widget.amText ?? localizations.anteMeridiemAbbreviation,
                     pmText:
-                        widget.pmText ?? localizations.postMeridiemAbbreviation,
+                    widget.pmText ?? localizations.postMeridiemAbbreviation,
                     isShowSeconds: widget.isShowSeconds,
                     is24HourMode: widget.is24HourMode,
                     minutesInterval: widget.minutesInterval,

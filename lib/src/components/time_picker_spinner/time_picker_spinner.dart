@@ -23,7 +23,7 @@ class TimePickerSpinner extends StatelessWidget {
 
   const TimePickerSpinner({
     super.key,
-    this.height = 200,
+    this.height = 220,
     this.diameterRatio = 2,
     this.itemExtent = 40,
     this.squeeze = 1.1,
