@@ -102,9 +102,7 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
               children: [
                 if (widget.type == OmniDateTimePickerType.dateAndTime ||
                     widget.type == OmniDateTimePickerType.date)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Calendar(
+                Calendar(
                     initialDate: state.dateTime,
                     firstDate: state.firstDate,
                     lastDate: state.lastDate,
@@ -117,7 +115,7 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                           .add(UpdateDate(dateTime: datetime));
                       widget.onDateTimeChanged(datetime);
                     },
-                  )),
+                  ),
                 if (widget.separator != null) widget.separator!,
                 if ((widget.type == OmniDateTimePickerType.dateAndTime ||
                     widget.type == OmniDateTimePickerType.time) &&
