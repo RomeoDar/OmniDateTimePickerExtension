@@ -1,6 +1,6 @@
-// lib/components/calendar/calendar.dart
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
   final DateTime initialDate, firstDate, lastDate;
@@ -44,6 +44,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      locale: Localizations.localeOf(context).toLanguageTag(),
       firstDay: widget.firstDate,
       lastDay: widget.lastDate,
       focusedDay: widget.initialDate,
@@ -54,6 +55,11 @@ class _CalendarState extends State<Calendar> {
       enabledDayPredicate: widget.selectableDayPredicate,
       selectedDayPredicate: (d) => _selectedDate != null && _isSameDay(d, _selectedDate!),
       headerStyle: HeaderStyle(
+        titleTextFormatter: (date, locale) {
+          final localeName = locale?.toString() ?? Intl.defaultLocale ?? 'en_US';
+          final month = DateFormat.MMMM(localeName).format(date);
+          return '${month[0].toUpperCase()}${month.substring(1)} ${date.year}';
+        },
         titleCentered: true,
         formatButtonVisible: false,
         leftChevronMargin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
