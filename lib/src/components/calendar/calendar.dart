@@ -60,6 +60,7 @@ class _CalendarState extends State<Calendar> {
           final month = DateFormat.MMMM(localeName).format(date);
           return '${month[0].toUpperCase()}${month.substring(1)} ${date.year}';
         },
+        headerMargin: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
         titleCentered: true,
         formatButtonVisible: false,
         leftChevronMargin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
